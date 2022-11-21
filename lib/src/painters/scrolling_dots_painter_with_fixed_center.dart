@@ -5,12 +5,14 @@ import 'indicator_painter.dart';
 
 class ScrollingDotsWithFixedCenterPainter extends BasicIndicatorPainter {
   final ScrollingDotsEffect effect;
+  final bool outlinedCenter;
 
-  ScrollingDotsWithFixedCenterPainter({
-    required this.effect,
-    required int count,
-    required double offset,
-  }) : super(offset, count, effect);
+  ScrollingDotsWithFixedCenterPainter(
+      {required this.effect,
+      required int count,
+      required double offset,
+      this.outlinedCenter = true})
+      : super(offset, count, effect);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -63,14 +65,16 @@ class ScrollingDotsWithFixedCenterPainter extends BasicIndicatorPainter {
       canvas.drawRRect(rRect, dotPaint..color = color);
     }
 
-    // final rRect =
-    //     _calcBounds(size.height, size.width / 2, 0, effect.activeDotScale);
-    // canvas.drawRRect(
-    //     rRect,
-    //     Paint()
-    //       ..color = effect.activeDotColor
-    //       ..strokeWidth = effect.activeStrokeWidth
-    //       ..style = PaintingStyle.stroke);
+    if (outlinedCenter) {
+      final rRect =
+          _calcBounds(size.height, size.width / 2, 0, effect.activeDotScale);
+      canvas.drawRRect(
+          rRect,
+          Paint()
+            ..color = effect.activeDotColor
+            ..strokeWidth = effect.activeStrokeWidth
+            ..style = PaintingStyle.stroke);
+    }
   }
 
   RRect _calcBounds(double canvasHeight, double startingPoint, num i,

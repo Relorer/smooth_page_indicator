@@ -24,11 +24,15 @@ class ScrollingDotsEffect extends BasicIndicatorEffect {
   // if True the old center dot style will be used
   final bool fixedCenter;
 
+  // if True the center will have an outline
+  final bool outlinedCenter;
+
   const ScrollingDotsEffect({
     this.activeStrokeWidth = 1.5,
     this.activeDotScale = 1.3,
     this.maxVisibleDots = 5,
     this.fixedCenter = false,
+    this.outlinedCenter = true,
     double offset = 16.0,
     double dotWidth = 16.0,
     double dotHeight = 16.0,
@@ -37,7 +41,7 @@ class ScrollingDotsEffect extends BasicIndicatorEffect {
     Color dotColor = Colors.grey,
     Color activeDotColor = Colors.indigo,
     double strokeWidth = 1.0,
-    PaintingStyle paintStyle = PaintingStyle.stroke,
+    PaintingStyle paintStyle = PaintingStyle.fill,
   })  : assert(activeDotScale >= 0.0),
         assert(maxVisibleDots >= 5 && maxVisibleDots % 2 != 0),
         super(
@@ -93,10 +97,10 @@ class ScrollingDotsEffect extends BasicIndicatorEffect {
         'ScrollingDotsWithFixedCenterPainter does not support infinite looping.',
       );
       return ScrollingDotsWithFixedCenterPainter(
-        count: count,
-        offset: offset,
-        effect: this,
-      );
+          count: count,
+          offset: offset,
+          effect: this,
+          outlinedCenter: outlinedCenter);
     } else {
       return ScrollingDotsPainter(
         count: count,
